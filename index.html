@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orbit Cerrajería — Seguridad 24h</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Variables ── */
+    :root {
+      --gold: #c8a944;
+      --gold-dim: #c8a94440;
+      --gold-glow: #c8a94420;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --steel: #2e2e2e;
+      --text: #e8e8e8;
+      --muted: #888;
+      --wa: #25D366;
+      --fb: #1877F2;
+      --ig: #E1306C;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Utilities ── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .gold { color: var(--gold); }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 4vw, 36px);
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+    .section-title span { color: var(--gold); }
+
+    /* ── Navbar ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: #111111ee;
+      backdrop-filter: blur(12px);
+      border-bottom: 0.5px solid #ffffff10;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-orbit-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .nav-orbit-dot {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+    .nav-orbit-ring {
+      position: absolute;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-dim);
+      animation: spin 6s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .nav-logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: opacity .2s;
+      text-decoration: none;
+    }
+    .nav-cta:hover { opacity: .85; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── Hero ── */
+    #inicio {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 80px;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 70% 50%, #c8a94412 0%, transparent 70%),
+                  radial-gradient(ellipse 40% 60% at 20% 80%, #c8a94408 0%, transparent 60%);
+    }
+
+    .hero-rings {
+      position: absolute;
+      right: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 500px; height: 500px;
+      opacity: .12;
+    }
+    .hero-rings circle { fill: none; stroke: var(--gold); }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-glow);
+      border: 0.5px solid var(--gold-dim);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      color: var(--gold);
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 1.5s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 8vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp .7s ease .1s both;
+    }
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 36px;
+      max-width: 460px;
+      animation: fadeUp .7s ease .2s both;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 40px;
+      animation: fadeUp .7s ease .3s both;
+    }
+
+    .btn-wa, .btn-fb {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: transform .15s, opacity .15s;
+      text-decoration: none;
+    }
+    .btn-wa { background: var(--wa); color: #fff; }
+    .btn-fb { background: var(--fb); color: #fff; }
+    .btn-wa:hover, .btn-fb:hover { opacity: .88; transform: translateY(-1px); }
+
+    .hero-phones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      animation: fadeUp .7s ease .4s both;
+    }
+
+    .hero-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      font-size: 15px;
+      font-weight: 500;
+      transition: opacity .2s;
+    }
+    .hero-phone:hover { opacity: .75; }
+    .hero-phone svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Servicios ── */
+    #servicios {
+      padding: 100px 0;
+      background: var(--dark2);
+    }
+
+    .serv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .serv-card {
+      background: var(--dark3);
+      border: 0.5px solid #333;
+      border-radius: 12px;
+      padding: 24px 18px;
+      text-align: center;
+      transition: border-color .2s, transform .2s;
+      cursor: default;
+    }
+    .serv-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-3px);
+    }
+    .serv-card.highlight {
+      border-color: var(--gold-dim);
+      background: var(--gold-glow);
+    }
+
+    .serv-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+    .serv-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .serv-card.highlight .serv-icon,
+    .serv-card.highlight .serv-name { color: var(--gold); }
+
+    /* ── Productos ── */
+    #productos {
+      padding: 100px 0;
+    }
+
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 20px;
+    }
+
+    .prod-card {
+      background: var(--dark2);
+      border: 0.5px solid #2a2a2a;
+      border-radius: 14px;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s;
+    }
+    .prod-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-4px);
+    }
+
+    .prod-thumb {
+      height: 100px;
+      background: var(--dark3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      border-bottom: 0.5px solid #2a2a2a;
+    }
+
+    .prod-body { padding: 16px; }
+
+    .prod-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .prod-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .prod-price {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .btn-cotizar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      background: #25D36618;
+      color: var(--wa);
+      border: 0.5px solid #25D36640;
+      border-radius: 7px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .btn-cotizar:hover { background: #25D36630; }
+
+    /* ── Contacto ── */
+    #contacto {
+      padding: 100px 0;
+      background: var(--dark2);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 700px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-social { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 0.5px solid #333;
+      background: var(--dark3);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color .2s, transform .15s;
+    }
+    .social-btn:hover { border-color: #555; transform: translateX(4px); }
+    .social-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .social-wa  { background: #25D36620; }
+    .social-fb  { background: #1877F220; }
+    .social-ig  { background: #E1306C20; }
+    .social-label { color: var(--muted); font-size: 11px; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 14px; }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .info-row svg { width: 18px; height: 18px; stroke: var(--gold); fill: none; flex-shrink: 0; margin-top: 2px; }
+
+    .map-box {
+      background: var(--dark3);
+      border-radius: 12px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555;
+      font-size: 13px;
+      border: 0.5px solid #333;
+      overflow: hidden;
+    }
+    /* Embed real map here — placeholder for now */
+    .map-box iframe { width: 100%; height: 100%; border: none; border-radius: 12px; }
+
+    /* ── Footer ── */
+    footer {
+      padding: 30px 24px;
+      text-align: center;
+      border-top: 0.5px solid #222;
+      font-size: 12px;
+      color: #555;
+    }
+    footer span { color: var(--gold); }
+
+    /* ── Floating WA ── */
+    .fab-wa {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      width: 54px; height: 54px;
+      background: var(--wa);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px #25D36650;
+      z-index: 200;
+      cursor: pointer;
+      transition: transform .2s;
+      text-decoration: none;
+    }
+    .fab-wa:hover { transform: scale(1.1); }
+    .fab-wa svg { width: 28px; height: 28px; fill: #fff; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-orbit-icon">
+        <div class="nav-orbit-dot"></div>
+        <div class="nav-orbit-ring"></div>
+      </div>
+      <span class="nav-logo-text">ORBIT</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#productos">Productos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a href="https://wa.me/573000000000" target="_blank" class="nav-cta">WhatsApp</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <svg class="hero-rings" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="250" cy="250" r="200" stroke-width="1"/>
+      <circle cx="250" cy="250" r="150" stroke-width="0.5"/>
+      <circle cx="250" cy="250" r="100" stroke-width="1.5"/>
+      <circle cx="250" cy="250" r="50"  stroke-width="0.5"/>
+      <circle cx="380" cy="180" r="8"   fill="#c8a944" stroke="none"/>
+      <circle cx="140" cy="310" r="5"   fill="#c8a944" stroke="none"/>
+    </svg>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Disponible 24 horas · 7 días</div>
+        <h1 class="hero-title">
+          Cerrajería<br><span>Orbit</span>
+        </h1>
+        <p class="hero-sub">Seguridad profesional para tu hogar, negocio y vehículo. Servicio rápido, confiable y disponible las 24 horas.</p>
+        <div class="hero-btns">
+          <a href="https://wa.me/573000000000" target="_blank" class="btn-wa">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="https://facebook.com/OrbitCerrajeria" target="_blank" class="btn-fb">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+        </div>
+        <div class="hero-phones">
+          <a href="tel:+573000000000" class="hero-phone">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.52 12 19.79 19.79 0 011.47 3.45 2 2 0 013.44 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.54 8.91a16 16 0 006.56 6.56l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +57 300 000 0000
+          </a>
+          <a href="tel:+573100000000" class="hero-phone">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.52 12 19.79 19.79 0 011.47 3.45 2 2 0 013.44 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.54 8.91a16 16 0 006.56 6.56l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            +57 310 000 0000
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICIOS ── -->
+  <section id="servicios">
+    <div class="container">
+      <p class="section-label">Lo que hacemos</p>
+      <h2 class="section-title">Nuestros <span>Servicios</span></h2>
+      <div class="serv-grid">
+        <div class="serv-card">
+          <div class="serv-icon">🚪</div>
+          <div class="serv-name">Apertura de puertas</div>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">🔑</div>
+          <div class="serv-name">Duplicado de llaves</div>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">🔒</div>
+          <div class="serv-name">Instalación de cerraduras</div>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">🚗</div>
+          <div class="serv-name">Cerrajería vehicular</div>
+        </div>
+        <div class="serv-card">
+          <div class="serv-icon">🏢</div>
+          <div class="serv-name">Cerrajería comercial</div>
+        </div>
+        <div class="serv-card highlight">
+          <div class="serv-icon">⚡</div>
+          <div class="serv-name">Urgencias 24 h</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRODUCTOS ── -->
+  <section id="productos">
+    <div class="container">
+      <p class="section-label">Catálogo</p>
+      <h2 class="section-title">Productos y <span>Precios</span></h2>
+      <div class="prod-grid">
+
+        <div class="prod-card">
+          <div class="prod-thumb">🖥️</div>
+          <div class="prod-body">
+            <p class="prod-name">Cerradura Digital Smart</p>
+            <p class="prod-desc">Huella dactilar, PIN y app móvil. Carcasa de acero inoxidable.</p>
+            <p class="prod-price">$320.000 – $680.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20la%20Cerradura%20Digital%20Smart" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-thumb">🔒</div>
+          <div class="prod-body">
+            <p class="prod-name">Cerradura Mecánica</p>
+            <p class="prod-desc">Doble pasador, alta durabilidad. Ideal para puertas residenciales.</p>
+            <p class="prod-price">$85.000 – $200.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20una%20Cerradura%20Mec%C3%A1nica" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-thumb">🛡️</div>
+          <div class="prod-body">
+            <p class="prod-name">Alta Seguridad</p>
+            <p class="prod-desc">Anti-taladro, anti-ganzúa. Certificada. Para negocios y bodegas.</p>
+            <p class="prod-price">$450.000 – $1.200.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20una%20Cerradura%20de%20Alta%20Seguridad" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-thumb">🔑</div>
+          <div class="prod-body">
+            <p class="prod-name">Llaves y Duplicados</p>
+            <p class="prod-desc">Llaves normales, transponder y control remoto para vehículos.</p>
+            <p class="prod-price">$8.000 – $180.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20un%20duplicado%20de%20llave" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-thumb">🚗</div>
+          <div class="prod-body">
+            <p class="prod-name">Cerrajería para Carros</p>
+            <p class="prod-desc">Apertura, cambio de cilindro, programación de transponder y llaves.</p>
+            <p class="prod-price">$60.000 – $350.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20cerrajer%C3%ADa%20para%20mi%20carro" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="prod-card">
+          <div class="prod-thumb">⛓️</div>
+          <div class="prod-body">
+            <p class="prod-name">Candados y Accesorios</p>
+            <p class="prod-desc">Candados de alta resistencia, manijas, herrajes y accesorios de seguridad.</p>
+            <p class="prod-price">$25.000 – $280.000</p>
+            <a href="https://wa.me/573000000000?text=Hola%2C%20quiero%20cotizar%20candados%20o%20accesorios" target="_blank" class="btn-cotizar">
+              💬 Cotizar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACTO ── -->
+  <section id="contacto">
+    <div class="container">
+      <p class="section-label">Encuéntranos</p>
+      <h2 class="section-title">Contacto y <span>Redes</span></h2>
+      <div class="contact-grid">
+
+        <div>
+          <div class="contact-social">
+            <a href="https://wa.me/573000000000" target="_blank" class="social-btn">
+              <div class="social-icon social-wa">💬</div>
+              <div>
+                <div>WhatsApp Business</div>
+                <div class="social-label">+57 300 000 0000</div>
+              </div>
+            </a>
+            <a href="https://facebook.com/OrbitCerrajeria" target="_blank" class="social-btn">
+              <div class="social-icon social-fb">📘</div>
+              <div>
+                <div>Facebook</div>
+                <div class="social-label">/OrbitCerrajeria</div>
+              </div>
+            </a>
+            <a href="https://instagram.com/orbitcerrajeria" target="_blank" class="social-btn">
+              <div class="social-icon social-ig">📸</div>
+              <div>
+                <div>Instagram</div>
+                <div class="social-label">@orbitcerrajeria</div>
+              </div>
+            </a>
+          </div>
+
+          <div class="contact-info">
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Calle 12 #34-56, Villavicencio, Meta, Colombia</span>
+            </div>
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Lunes a Domingo · Disponible las 24 horas · Urgencias inmediatas</span>
+            </div>
+            <div class="info-row">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.52 12 19.79 19.79 0 011.47 3.45 2 2 0 013.44 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.54 8.91a16 16 0 006.56 6.56l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+              <span>+57 300 000 0000 &nbsp;·&nbsp; +57 310 000 0000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="map-box">
+          <!-- Reemplaza el src con tu embed de Google Maps -->
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63744.35!2d-73.6366!3d4.142!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3e2e0a1a1a1a1a%3A0x0!2sVillavicencio%2C+Meta!5e0!3m2!1ses!2sco!4v1"
+            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p>© 2025 <span>Orbit Cerrajería</span> · Villavicencio, Meta · Todos los derechos reservados</p>
+  </footer>
+
+  <!-- ── FAB WhatsApp ── -->
+  <a href="https://wa.me/573000000000" target="_blank" class="fab-wa" title="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
